@@ -2,10 +2,15 @@
 
 function getDogImage(breed) {
     fetch(`https://dog.ceo/api/breed/${breed}/images/random`)
-    .then(response => response.json())
+    .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error(response.statusText);
+      })
     .then(responseJson =>
         displayResults(responseJson, breed))
-    .catch(error => alert('Something went wrong. Try again later.'));
+    .catch(error => $('.results').append(`<h2>This breed is not found. Please try again.</h2>`));
 }
 
 function displayResults(responseJson, breed) {
@@ -14,8 +19,7 @@ function displayResults(responseJson, breed) {
     $('.results-img').replaceWith(
         `<img src="" class="results-img">`)
         $('.results-msg').replaceWith(`<h2 class="results-msg"></h2>`);
-    if (responseJson.message == "Breed not found (master breed does not exist)") {
-        $('.results').append(`<h2>This breed is not found. Please try again.</h2>`);
+    if (responseJson.status == "error") {
     }
     else {
         $('.results-msg').replaceWith(`<h2 class="results-msg">You requested for a ${breed}: </h2>
