@@ -11,12 +11,14 @@ function getDogImage(breed) {
 function displayResults(responseJson, breed) {
     console.log("This is a message");
     console.log(responseJson.message);
-
+    $('.results-img').replaceWith(
+        `<img src="" class="results-img">`)
+        $('.results-msg').replaceWith(`<h2 class="results-msg"></h2>`);
     if (responseJson.message == "Breed not found (master breed does not exist)") {
         $('.results').append(`<h2>This breed is not found. Please try again.</h2>`);
     }
     else {
-        $('.results').append(`<h2>You requested for a ${breed}: </h2>
+        $('.results-msg').replaceWith(`<h2 class="results-msg">You requested for a ${breed}: </h2>
         <img src="${responseJson.message}" class="results-img">`);   
     $('.results').removeClass('hidden');
     }
