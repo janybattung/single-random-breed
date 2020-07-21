@@ -10,7 +10,7 @@ function getDogImage(breed) {
       })
     .then(responseJson =>
         displayResults(responseJson, breed))
-    .catch(error => $('.results').append(`<h2>This breed is not found. Please try again.</h2>`));
+    .catch(error => $('.results-msg').replaceWith(`<h2 class="results-msg">This breed is not found. Please try again.</h2>`));
 }
 
 function displayResults(responseJson, breed) {
@@ -19,13 +19,9 @@ function displayResults(responseJson, breed) {
     $('.results-img').replaceWith(
         `<img src="" class="results-img">`)
         $('.results-msg').replaceWith(`<h2 class="results-msg"></h2>`);
-    if (responseJson.status == "error") {
-    }
-    else {
         $('.results-msg').replaceWith(`<h2 class="results-msg">You requested for a ${breed}: </h2>
         <img src="${responseJson.message}" class="results-img">`);   
     $('.results').removeClass('hidden');
-    }
     
 }
 
